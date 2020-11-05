@@ -32,6 +32,16 @@ class WeixinController extends Controller
 		$token= request()->get("echostr","");
 		if(!empty($token) && $this->checkSignature()){
 			echo $token;
+
+
+
+
+
+
+
+
+
+			
 		}
 
 
