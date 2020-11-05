@@ -6,9 +6,9 @@ use Illuminate\Http\Request;
 
 class WeixinController extends Controller
 {
+	//接口配置
     private function checkSignature()
 	{
-
 	    $signature = $_GET["signature"];
 	    $timestamp = $_GET["timestamp"];
 	    $nonce = $_GET["nonce"];
@@ -26,28 +26,12 @@ class WeixinController extends Controller
 	        return false;
 	    }
 	}
-
+	//接口测试
 	public function wx(){
-
-		$token= request()->get("echostr","");
+		$token= request()->get("echostr");
 		if(!empty($token) && $this->checkSignature()){
 			echo $token;
-
-
-
-
-
-
-
-
-
-			
 		}
-
-
-
 	}
-
-
 
 }
