@@ -18,7 +18,10 @@ Route::prefix('yangnan')->group(function(){
 	Route::get('/','YangnanController@index');
 	Route::get('/table','YangnanController@table');
 });
-
+//练习
 Route::prefix('a')->group(function() {
 	Route::get('/','AController@index');
 } );
+Route::prefix('weixin')->group(function(){
+	Route::get('/','WeixinController@checkSignature');
+});
