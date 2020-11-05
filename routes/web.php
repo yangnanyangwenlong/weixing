@@ -18,3 +18,6 @@ Route::prefix('yangnan')->group(function(){
 	Route::get('/','YangnanController@index');
 	Route::get('/table','YangnanController@table');
 });
+Route::prefix('a')->group(function(){
+	Route::get('/','AController@index');
+});
