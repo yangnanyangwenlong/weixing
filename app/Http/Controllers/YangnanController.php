@@ -14,7 +14,7 @@ class YangnanController extends Controller
     public function table(){
 
     	Redis::set('name',"zhangy");
-    	dd(Redis::get('name'));
+    	// dd(Redis::get('name'));
     	// $data = DB::table('user')->insert();
     	$res = DB::table('p_users')->get();
 
