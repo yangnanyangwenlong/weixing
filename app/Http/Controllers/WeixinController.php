@@ -8,6 +8,7 @@ class WeixinController extends Controller
 {
     private function checkSignature()
 	{
+		
 	    $signature = $_GET["signature"];
 	    $timestamp = $_GET["timestamp"];
 	    $nonce = $_GET["nonce"];
@@ -24,4 +25,19 @@ class WeixinController extends Controller
 	        return false;
 	    }
 	}
+
+	public function wx(){
+
+		$token=file_get_contents("echostr","")
+		if(!empty($token) && $this->checkSignature()){
+			echo $token;
+		}e
+
+
+
+	}
+
+
+
+
 }
