@@ -26,7 +26,7 @@ class WeixinController extends Controller
 		    	if($data->Event=="subscribe"){
 		    		// file_put_contents('opopop');
 		    		$content="asdasdsadasdasd";
-
+ 
 		    	}
 		    	echo $this->xiaoxi($data,$content);
 
@@ -59,6 +59,25 @@ class WeixinController extends Controller
 		 
 	}
 
+	private function checkSignature()
+{
+	    $signature = $_GET["signature"];
+	    $timestamp = $_GET["timestamp"];
+	    $nonce = $_GET["nonce"];
+		
+	    $token = env('WX_TOKEN');
+	    $tmpArr = array($token, $timestamp, $nonce);
+	    sort($tmpArr, SORT_STRING);
+	    $tmpStr = implode( $tmpArr );
+	    $tmpStr = sha1( $tmpStr );
+	    
+	    if( $tmpStr == $signature ){
+	        return true;
+	    }else{
+	        return false;
+	    }
+}
+
 
 
 	//回复
@@ -85,6 +104,7 @@ class WeixinController extends Controller
 
 
     }
+
 
 
 }
