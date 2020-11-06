@@ -10,7 +10,7 @@ class WeixinController extends Controller
 
 	//接口测试/
 		public function wx(){
-		    $token = query()->get('echostr','');
+		    $token = request()->get('echostr','');
 
 		    if(!empty($token) == $this->checkSignature()){
 		    	echo $token;
