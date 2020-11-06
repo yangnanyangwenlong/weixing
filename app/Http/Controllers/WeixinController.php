@@ -20,19 +20,19 @@ class WeixinController extends Controller
 		    	$xml_str = file_get_contents('php://input');
 		    	//记录日志
 		    	file_put_contents('wx_wvent.txt', $xml_str);
-		       	// dd($data);
-		     //    echo "<xml>
-		     //    			<ToUserName><![CDATA[gh_92948588ea26]]></ToUserName>
-							// <FromUserName><![CDATA[obzSIt32D35x2OPb8asBVv4V1Wk0]]></FromUserName>
-							// <CreateTime>1604656805</CreateTime>
-							// <MsgType><![CDATA[event]]></MsgType>
-							// <Event><![CDATA[subscribe]]></Event>
-							// <EventKey><![CDATA[]]></EventKey>
-					  // </xml>";
-				echo "";
-		        die;
-		    	//将xml文本转为
+
+			
+		    	//将xml文本转为 对象
 		    	$data = simplexml_load_string($xml_str, 'SimpleXMLElement', LIBXML_NOCDATA);
+
+		    	if($data->Event=="subscribe"){
+		    		$content="asdasdsadasdasd";
+
+		    	}
+		    	echo $this->xiaoxi($data,$content);
+
+
+
 
 		    }		
 		}
@@ -62,88 +62,33 @@ class WeixinController extends Controller
 		 // echo "access_token: ".$token;
 		 
 	}
+	//回复
+	function xiaoxi($data,$content){ //返回消息
+        //我们可以恢复一个文本|图片|视图|音乐|图文列如文本
+            //接收方账号
+        $toUserName=$data->FromUserName;
+           //开发者微信号
+        $fromUserName=$data->ToUserName;
+           //时间戳
+        $time=time();
+           //返回类型
+        $msgType="text";
+
+        $xml = "<xml>
+                      <ToUserName><![CDATA[%s]]></ToUserName>
+                      <FromUserName><![CDATA[%s]]></FromUserName>
+                      <CreateTime>%s</CreateTime>
+                      <MsgType><![CDATA[%s]]></MsgType>
+                      <Content><![CDATA[%s]]></Content>
+                    </xml>";
+            //替换掉上面的参数用 sprintf
+        echo sprintf($xml,$toUserName,$fromUserName,$time,$msgType,$content);
 
 
 
 
 
-
-
-
-
-
-
-    public function sub()
-    {
-        $str = file_get_contents("php://input");
-        Log::info('===='.$str);
-        $array = simplexml_load_string($str);
-        if ($array->MsgType == "event") {
-            if ($array->Event == "subscribe") {
-                $ToUserName = $array->FromUserName;
-                $FromUserName = $array->ToUserName;
-                $CreateTime = time();
-                $MsgType = "text";
-                $Content = "你好，欢迎关注";
-                $res = '<xml>
-                        <ToUserName><![CDATA['.$ToUserName.']]></ToUserName>
-                        <FromUserName><![CDATA['.$FromUserName.']]></FromUserName>
-                        <CreateTime>'.$CreateTime.'</CreateTime>
-                        <MsgType><![CDATA['.$MsgType.']]></MsgType>
-                        <Content><![CDATA['.$Content.']]><Content>
-                   </xml>';
-                echo $res;exit;
-            }
-            if ($array->Event == "CLICK") {
-                $eventkey = $array->EventKey;
-                switch($eventkey){
-                    case 'V1001_TODAY_MUSIC':
-                        $arrays = ['少年','拥抱春天'];
-                        $content = $arrays[array_rand($arrays)];
-                        $this->responseText($array,$content);
-                        break;
-                    case 'V1001_GOOD':
-                        $count = Cache::add('good',1)?:Cache::increment('good');
-                        $content = '点赞人数:'.$count;
-                        $this->responseText($array,$content);
-                        break;
-                    default:
-                        break;
-                }
-            }
-        }elseif($array->MsgType=='text'){
-            $msg = $array->Content;
-            switch($msg){
-                case '在吗':
-                    $content = '客观您好，有什么帮助您的吗？';
-                    $this->responseText($array,$content);
-                    break;
-                case '在':
-                    $content = '客观您好，有什么帮助您的吗？';
-                    $this->responseText($array,$content);
-                    break;
-                case '红包':
-                    $content = '客观您好，天上有掉馅饼的事吗？';
-                    $this->responseText($array,$content);
-                    break;
-                case '百度':
-                    $this->responseNews($array);
-                    break;
-                case '图片':
-                    $media_id="_3oGKn0BD19avk1VTPXLrr7r-t4dfhQFQ420Bvv1Mb7F3tv-nSC0VNLyn5NDwJ3h";
-                    $this->img($array,$media_id);
-                    break;
-                default:
-                    $content = '欢迎';
-                    $this->responseText($array,$content);
-                    break;
-            }
-        }
     }
-
-
-
-
 
 
 
