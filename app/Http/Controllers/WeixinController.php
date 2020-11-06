@@ -26,13 +26,11 @@ class WeixinController extends Controller
 		    	$data = simplexml_load_string($xml_str, 'SimpleXMLElement', LIBXML_NOCDATA);
 
 		    	if($data->Event=="subscribe"){
+		    		file_put_contents('php://input');
 		    		$content="asdasdsadasdasd";
 
 		    	}
 		    	echo $this->xiaoxi($data,$content);
-
-
-
 
 		    }		
 		}
@@ -62,6 +60,9 @@ class WeixinController extends Controller
 		 // echo "access_token: ".$token;
 		 
 	}
+
+
+
 	//回复
 	function xiaoxi($data,$content){ //返回消息
         //我们可以恢复一个文本|图片|视图|音乐|图文列如文本
@@ -85,31 +86,5 @@ class WeixinController extends Controller
         echo sprintf($xml,$toUserName,$fromUserName,$time,$msgType,$content);
 
 
-
-
-
     }
 
-
-
-	private function checkSignature()
-	{
-	    $signature = $_GET["signature"];
-	    $timestamp = $_GET["timestamp"];
-	    $nonce = $_GET["nonce"];
-		
-	    $token = 123;
-	    $tmpArr = array($token, $timestamp, $nonce);
-	    sort($tmpArr, SORT_STRING);
-
-	    $tmpStr = implode( $tmpArr );
-	    $tmpStr = sha1( $tmpStr );
-	    
-	    if( $tmpStr == $signature ){
-	        return true;
-	    }else{
-	        return false;
-	    }
-	}
-
-}
