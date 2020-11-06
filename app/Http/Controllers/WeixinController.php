@@ -44,8 +44,34 @@ class WeixinController extends Controller
 		    	//记录日志
 		    	file_put_contents('wx_wvent.log', $xml_str);
 		    	//将xml文本转为
-		    	// $data = simplexml_load_string($xml_str, 'SimpleXMLElement', LIBXML_NOCDATA);
-		     //   	dd($data);
+		    	$data = simplexml_load_string($xml_str, 'SimpleXMLElement', LIBXML_NOCDATA);
+		       	dd($data);
+		        
+
+		    }else{
+		        echo '';
+		    }		
+		}
+		
+		public function index(){
+		    $signature = $_GET["signature"];
+		    $timestamp = $_GET["timestamp"];
+		    $nonce = $_GET["nonce"];
+			
+		    $token = env('WX_TOKEN');
+		    $tmpArr = array($token, $timestamp, $nonce);
+		    sort($tmpArr, SORT_STRING);
+		    $tmpStr = implode( $tmpArr );
+		    $tmpStr = sha1( $tmpStr );
+		    
+		    if( $tmpStr == $signature ){
+		    	// 接收数据
+		    	$xml_str = file_get_contents('php://input');
+		    	//记录日志
+		    	file_put_contents('wx_wvent.log', $xml_str);
+		    	//将xml文本转为
+		    	$data = simplexml_load_string($xml_str, 'SimpleXMLElement', LIBXML_NOCDATA);
+		       	dd($data);
 		        
 
 		    }else{
