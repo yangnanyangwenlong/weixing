@@ -39,9 +39,17 @@ class WeixinController extends Controller
 		    $tmpStr = sha1( $tmpStr );
 		    
 		    if( $tmpStr == $signature ){
-		        echo $_GET['echostr'];
+		    	// 接收数据
+		    	$xml_str = file_get_contents('php://input');
+		    	//记录日志
+		    	file_put_contents('wx_wvent.log', $xml_str)
+		    	//将xml文本转为
+		    	$data = simplexml_load_string($xml_str, 'SimpleXMLElement', LIBXML_NOCDATA);
+		       	dd($data);
+		        
+
 		    }else{
-		        echo '123';
+		        echo '';
 		    }		
 		}
 	//接口配置
@@ -88,7 +96,7 @@ class WeixinController extends Controller
 
 			 Redis::set($key,$token);
 			 // echo $key;die;
-			 Redis::expire($key,4);	
+			 Redis::expire($key,24*60*60);	
 		 }
 
 		
