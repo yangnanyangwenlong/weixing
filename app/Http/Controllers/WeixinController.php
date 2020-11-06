@@ -46,7 +46,8 @@ class WeixinController extends Controller
 		    	//将xml文本转为
 		    	// $data = simplexml_load_string($xml_str, 'SimpleXMLElement', LIBXML_NOCDATA);
 		     //   	dd($data);
-		        echo '';die;
+		        echo "";
+		        die;
 
 		    }else{
 		        echo '';
