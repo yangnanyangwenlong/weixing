@@ -42,7 +42,7 @@ class WeixinController extends Controller
 		    	// 接收数据
 		    	$xml_str = file_get_contents('php://input');
 		    	//记录日志
-		    	file_put_contents('wx_wvent.log', $xml_str)
+		    	file_put_contents('wx_wvent.log', $xml_str);
 		    	//将xml文本转为
 		    	// $data = simplexml_load_string($xml_str, 'SimpleXMLElement', LIBXML_NOCDATA);
 		     //   	dd($data);
