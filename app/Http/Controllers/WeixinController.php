@@ -39,9 +39,9 @@ class WeixinController extends Controller
 	    $tmpStr = sha1( $tmpStr );
 	    
 	    if( $tmpStr == $signature ){
-	        echo $token;
+	        echo $_GET['echostr'];
 	    }else{
-	        echo 123;
+	        echo '123';
 	    }		
 	}
 	//接口配置
