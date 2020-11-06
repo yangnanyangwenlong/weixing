@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redis;
+use Log;
 class WeixinController extends Controller
 {
 	
@@ -63,13 +64,89 @@ class WeixinController extends Controller
 	}
 
 
-	//自动回复
-	public function infode(){
-		//接收数据
-		$data = file_get_contents('php://input');
 
 
-	}
+
+
+
+
+
+
+
+    public function sub()
+    {
+        $str = file_get_contents("php://input");
+        Log::info('===='.$str);
+        $array = simplexml_load_string($str);
+        if ($array->MsgType == "event") {
+            if ($array->Event == "subscribe") {
+                $ToUserName = $array->FromUserName;
+                $FromUserName = $array->ToUserName;
+                $CreateTime = time();
+                $MsgType = "text";
+                $Content = "你好，欢迎关注";
+                $res = '<xml>
+                        <ToUserName><![CDATA['.$ToUserName.']]></ToUserName>
+                        <FromUserName><![CDATA['.$FromUserName.']]></FromUserName>
+                        <CreateTime>'.$CreateTime.'</CreateTime>
+                        <MsgType><![CDATA['.$MsgType.']]></MsgType>
+                        <Content><![CDATA['.$Content.']]><Content>
+                   </xml>';
+                echo $res;exit;
+            }
+            if ($array->Event == "CLICK") {
+                $eventkey = $array->EventKey;
+                switch($eventkey){
+                    case 'V1001_TODAY_MUSIC':
+                        $arrays = ['少年','拥抱春天'];
+                        $content = $arrays[array_rand($arrays)];
+                        $this->responseText($array,$content);
+                        break;
+                    case 'V1001_GOOD':
+                        $count = Cache::add('good',1)?:Cache::increment('good');
+                        $content = '点赞人数:'.$count;
+                        $this->responseText($array,$content);
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }elseif($array->MsgType=='text'){
+            $msg = $array->Content;
+            switch($msg){
+                case '在吗':
+                    $content = '客观您好，有什么帮助您的吗？';
+                    $this->responseText($array,$content);
+                    break;
+                case '在':
+                    $content = '客观您好，有什么帮助您的吗？';
+                    $this->responseText($array,$content);
+                    break;
+                case '红包':
+                    $content = '客观您好，天上有掉馅饼的事吗？';
+                    $this->responseText($array,$content);
+                    break;
+                case '百度':
+                    $this->responseNews($array);
+                    break;
+                case '图片':
+                    $media_id="_3oGKn0BD19avk1VTPXLrr7r-t4dfhQFQ420Bvv1Mb7F3tv-nSC0VNLyn5NDwJ3h";
+                    $this->img($array,$media_id);
+                    break;
+                default:
+                    $content = '欢迎';
+                    $this->responseText($array,$content);
+                    break;
+            }
+        }
+    }
+
+
+
+
+
+
+
 	private function checkSignature()
 	{
 	    $signature = $_GET["signature"];

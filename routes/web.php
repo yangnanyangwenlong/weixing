@@ -23,5 +23,6 @@ Route::prefix('yangnan')->group(function(){
 Route::prefix('weixin')->group(function(){
 	Route::post('/wx','WeixinController@wx');//事件（推送
 	Route::get('/rediscoken','WeixinController@rediscoken');//测试1
-	
+	Route::get('/sub','WeixinController@sub');//测试1
+
 });
