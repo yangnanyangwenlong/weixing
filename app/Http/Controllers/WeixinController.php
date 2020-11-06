@@ -16,8 +16,6 @@ class WeixinController extends Controller
 		    if(!empty($token) == $this->checkSignature()){
 		    	echo $token;
 		    }else{
-		    	// 接收数据
-		    	$xml_str = file_get_contents('php://input');
 		    	//记录日志
 		    	file_put_contents('wx_wvent.txt', $xml_str);
 
@@ -26,7 +24,7 @@ class WeixinController extends Controller
 		    	$data = simplexml_load_string($xml_str, 'SimpleXMLElement', LIBXML_NOCDATA);
 
 		    	if($data->Event=="subscribe"){
-		    		file_put_contents('opopop');
+		    		// file_put_contents('opopop');
 		    		$content="asdasdsadasdasd";
 
 		    	}
@@ -87,6 +85,6 @@ class WeixinController extends Controller
 
 
     }
-    
+
 
 }
