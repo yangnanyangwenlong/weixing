@@ -22,4 +22,5 @@ Route::prefix('yangnan')->group(function(){
 
 Route::prefix('weixin')->group(function(){
 	Route::get('/wx','WeixinController@wx');//
+	Route::get('/cs1','WeixinController@cs1');//测试1
 });
