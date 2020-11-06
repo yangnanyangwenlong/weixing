@@ -21,8 +21,6 @@ Route::prefix('yangnan')->group(function(){
 //练习
 
 Route::prefix('weixin')->group(function(){
-	Route::post('/wx','WeixinController@wx');//
-	Route::get('/cs1','WeixinController@cs1');//测试1
+	Route::post('/wx','WeixinController@wx');//事件（推送
 	Route::get('/rediscoken','WeixinController@rediscoken');//测试1
-	// Route::get('/RedisToken','WeixinController@RedisToken');//测试12
 });

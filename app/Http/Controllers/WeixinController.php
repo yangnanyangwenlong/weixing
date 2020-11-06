@@ -7,72 +7,34 @@ use Illuminate\Support\Facades\Redis;
 class WeixinController extends Controller
 {
 	
- //    private function checkSignature()
-	// {
-	//     $signature = $_GET["signature"];
-	//     $timestamp = $_GET["timestamp"];
-	//     $nonce = $_GET["nonce"];
-		
-	//     $token = 123;
-	//     $tmpArr = array($token, $timestamp, $nonce);
-	//     sort($tmpArr, SORT_STRING);
 
-	//     $tmpStr = implode( $tmpArr );
-	//     $tmpStr = sha1( $tmpStr );
-	    
-	//     if( $tmpStr == $signature ){
-	//         return true;
-	//     }else{
-	//         return false;
-	//     }
-	// }
 	//接口测试/
 		public function wx(){
-		    $signature = $_GET["signature"];
-		    $timestamp = $_GET["timestamp"];
-		    $nonce = $_GET["nonce"];
-			
-		    $token = env('WX_TOKEN');
-		    $tmpArr = array($token, $timestamp, $nonce);
-		    sort($tmpArr, SORT_STRING);
-		    $tmpStr = implode( $tmpArr );
-		    $tmpStr = sha1( $tmpStr );
-		    
-		    if( $tmpStr == $signature ){
+		    $token = query()->get('echostr','');
+
+		    if(!empty($token) == $this->checkSignature()){
+		    	echo $token;
+		    }else{
 		    	// 接收数据
 		    	$xml_str = file_get_contents('php://input');
 		    	//记录日志
-		    	file_put_contents('wx_wvent.log', $xml_str);
-		    	//将xml文本转为
-		    	// $data = simplexml_load_string($xml_str, 'SimpleXMLElement', LIBXML_NOCDATA);
-		     //   	dd($data);
-		        echo "";
+		    	file_put_contents('wx_wvent.txt', $xml_str);
+		       	// dd($data);
+		     //    echo "<xml>
+		     //    			<ToUserName><![CDATA[gh_92948588ea26]]></ToUserName>
+							// <FromUserName><![CDATA[obzSIt32D35x2OPb8asBVv4V1Wk0]]></FromUserName>
+							// <CreateTime>1604656805</CreateTime>
+							// <MsgType><![CDATA[event]]></MsgType>
+							// <Event><![CDATA[subscribe]]></Event>
+							// <EventKey><![CDATA[]]></EventKey>
+					  // </xml>";
+				echo "";
 		        die;
+		    	//将xml文本转为
+		    	$data = simplexml_load_string($xml_str, 'SimpleXMLElement', LIBXML_NOCDATA);
 
-		    }else{
-		        echo '';
 		    }		
 		}
-
-	//接口配置
-	private function checkSignature()
-	{
-	    $signature = $_GET["signature"];
-	    $timestamp = $_GET["timestamp"];
-	    $nonce = $_GET["nonce"];
-		
-	    $token = 123123;
-	    $tmpArr = array($token, $timestamp, $nonce);
-	    sort($tmpArr, SORT_STRING);
-	    $tmpStr = implode( $tmpArr );
-	    $tmpStr = sha1( $tmpStr );
-	    
-	    if( $tmpStr == $signature ){
-	        return true;
-	    }else{
-	        return false;
-	    }
-	}
 
 	//连接
 	public function cs1(){
@@ -104,6 +66,34 @@ class WeixinController extends Controller
 		
 		 // echo "access_token: ".$token;
 		 
+	}
+
+
+	//自动回复
+	public function infode(){
+		//接收数据
+		$data = file_get_contents('php://input');
+
+
+	}
+	private function checkSignature()
+	{
+	    $signature = $_GET["signature"];
+	    $timestamp = $_GET["timestamp"];
+	    $nonce = $_GET["nonce"];
+		
+	    $token = 123;
+	    $tmpArr = array($token, $timestamp, $nonce);
+	    sort($tmpArr, SORT_STRING);
+
+	    $tmpStr = implode( $tmpArr );
+	    $tmpStr = sha1( $tmpStr );
+	    
+	    if( $tmpStr == $signature ){
+	        return true;
+	    }else{
+	        return false;
+	    }
 	}
 
 }
