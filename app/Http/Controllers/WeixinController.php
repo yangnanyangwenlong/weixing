@@ -26,7 +26,7 @@ class WeixinController extends Controller
 		    	$data = simplexml_load_string($xml_str, 'SimpleXMLElement', LIBXML_NOCDATA);
 
 		    	if($data->Event=="subscribe"){
-		    		file_put_contents('php://input');
+		    		file_put_contents('opopop');
 		    		$content="asdasdsadasdasd";
 
 		    	}
