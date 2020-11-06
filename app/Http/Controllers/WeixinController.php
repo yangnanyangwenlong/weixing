@@ -36,17 +36,11 @@ class WeixinController extends Controller
 		    }		
 		}
 
-	//连接
-	public function cs1(){
-		$token = request()->get('echostr','');
-		if(!empty($token) && $this->checkSignature()){
-			echo $token;
-		}
-	}
+
 	//redis 缓存coken 值
 	public function rediscoken(){
 		 $key = 'wx:access_token';
-		 // echo $key;die;
+		 
 		 $token = Redis::get($key);
 		 if($token){
 		 	echo "有缓存";echo '</br>';
