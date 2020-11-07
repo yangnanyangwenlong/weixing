@@ -94,12 +94,21 @@ class WeixinController extends Controller
         $msgType="text";
 
         $xml = "<xml>
-                      <ToUserName><![CDATA[%s]]></ToUserName>
-                      <FromUserName><![CDATA[%s]]></FromUserName>
-                      <CreateTime>%s</CreateTime>
-                      <MsgType><![CDATA[%s]]></MsgType>
-                      <Content><![CDATA[%s]]></Content>
-                    </xml>";
+					  <ToUserName><![CDATA[%s]]></ToUserName>
+					  <FromUserName><![CDATA[%s]]></FromUserName>
+					  <CreateTime>%s</CreateTime>
+					  <MsgType><![CDATA[%s]]></MsgType>
+					  <Event><![CDATA[%s]]></Event>
+					  <EventKey><![CDATA[%s]]></EventKey>
+					  <Ticket><![CDATA[%s]]></Ticket>
+					</xml>";
+                    // <xml>
+                    //   <ToUserName><![CDATA[%s]]></ToUserName>
+                    //   <FromUserName><![CDATA[%s]]></FromUserName>
+                    //   <CreateTime>%s</CreateTime>
+                    //   <MsgType><![CDATA[%s]]></MsgType>
+                    //   <Content><![CDATA[%s]]></Content>
+                    // </xml>
             //替换掉上面的参数用 sprintf
         echo sprintf($xml,$toUserName,$fromUserName,$time,$msgType,$content);
 
