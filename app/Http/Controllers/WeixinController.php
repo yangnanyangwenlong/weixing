@@ -26,11 +26,11 @@ class WeixinController extends Controller
 
 		    	if($data->Event=="subscribe"){
 		    		// file_put_contents('opopop');
-		    		$content="asdasdsadasdasd";
+		    		$content="滚，别来";
+		    		echo $this->xiaoxi($data,$content);
  
 		    	}
-		    	echo $this->xiaoxi($data,$content);
-
+		    	// if($data->)
 		    }		
 		}
 
@@ -81,7 +81,7 @@ class WeixinController extends Controller
 
 
 
-	//回复
+	//关注回复
 	function xiaoxi($data,$content){ //返回消息
         //我们可以恢复一个文本|图片|视图|音乐|图文列如文本
             //接收方账号
