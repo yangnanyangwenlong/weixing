@@ -29,7 +29,7 @@ class WeixinController extends Controller
 		    		$content="关注成功。";
 		    		echo $this->xiaoxi($data,$content);
  
-		    	}
+		    	}else
 		    	if($data->unsubscribe){
 		    		$console = "取消关注成功";
 		    		echo $this->qx($data,$console);
@@ -128,7 +128,6 @@ class WeixinController extends Controller
 				</xml>";
 		echo sprintf($xml,$toUserName,$fromUserName,$time,$msgType,$content);
     }
-
 
 
 }
