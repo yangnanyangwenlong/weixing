@@ -10,7 +10,8 @@ class WeixinController extends Controller
 	
 
 	//接口测试/
-		public function wx(){
+	public function wx()
+	{
 		    $token = request()->get('echostr','');
 		    $xml_str = file_get_contents('php://input');
 
@@ -35,11 +36,12 @@ class WeixinController extends Controller
 		    		echo $this->qx($data,$console);
 		    	}
 		    }		
-		}
+	}
 
 
 	//redis 缓存coken 值
-	public function rediscoken(){
+	public function rediscoken()
+	{
 		 $key = 'wx:access_token';
 		 
 		 $token = Redis::get($key);
@@ -59,33 +61,33 @@ class WeixinController extends Controller
 		 }
 
 		
-		 // echo "access_token: ".$token;
-		 
+		 // echo "access_token: ".$token;		 
 	}
-
+	//接口
 	private function checkSignature()
-{
-	    $signature = $_GET["signature"];
-	    $timestamp = $_GET["timestamp"];
-	    $nonce = $_GET["nonce"];
-		
-	    $token = env('WX_TOKEN');
-	    $tmpArr = array($token, $timestamp, $nonce);
-	    sort($tmpArr, SORT_STRING);
-	    $tmpStr = implode( $tmpArr );
-	    $tmpStr = sha1( $tmpStr );
-	    
-	    if( $tmpStr == $signature ){
-	        return true;
-	    }else{
-	        return false;
-	    }
-}
+	{
+		    $signature = $_GET["signature"];
+		    $timestamp = $_GET["timestamp"]; 
+		    $nonce = $_GET["nonce"];
+			
+		    $token = env('WX_TOKEN');
+		    $tmpArr = array($token, $timestamp, $nonce);
+		    sort($tmpArr, SORT_STRING);
+		    $tmpStr = implode( $tmpArr );
+		    $tmpStr = sha1( $tmpStr );
+		    
+		    if( $tmpStr == $signature ){
+		        return true;
+		    }else{
+		        return false;
+		    }
+	}
 
 
 
 	//关注回复
-	function xiaoxi($data,$content){ //返回消息
+	function xiaoxi($data,$content)
+	{ //返回消息
         //我们可以恢复一个文本|图片|视图|音乐|图文列如文本
             //接收方账号
         $toUserName=$data->FromUserName;
@@ -109,7 +111,9 @@ class WeixinController extends Controller
 
 
     }
-    function qx($data,$console){
+
+    function qx($data,$console)
+    {
     	    //接收方账号
         $toUserName=$data->FromUserName;
            //开发者微信号
@@ -124,10 +128,59 @@ class WeixinController extends Controller
 				  <FromUserName><![CDATA[%s]]></FromUserName>
 				  <CreateTime>%s</CreateTime>
 				  <MsgType><![CDATA[%s]]></MsgType>
-				  <Event><![CDATA[%s]]></Event>
+				  <Content><![CDATA[%s]]></Content>
 				</xml>";
 		echo sprintf($xml,$toUserName,$fromUserName,$time,$msgType,$content);
     }
+
+
+public function GetShow(){
+	$token = $this->token;
+	//将token、timestamp、nonce三个参数进行字典序排序
+	$arr = [$token,$_GET["timestamp"],$_GET['nonce']];
+	sort($arr);
+	$str = implode($arr);
+	//加密
+	$GetShow = sha1($str);
+	//加密后的字符串与signature对比
+	if($GetShow == $_GET["signature"]){
+	echo $_GET['echostr'];die;
+	}
+}
+
+/*用户关注授权获取信息*/
+public function responseMsg(){
+	if(@!empty($_GET["echostr"])){
+		file_put_contents("1.txt",json_encode($_GET));
+		$this->GetShow();
+	}
+	$data = file_get_contents("php://input");
+	$this->res = (array)simplexml_load_string($data,"SimpleXMLElement",LIBXML_NOCDATA);
+	//判断是否首次关注
+	if ($this->res['MsgType'] == 'event') 
+	{
+		if ($this->res['Event'] == 'subscribe') 
+		{
+			$this->sendText("欢迎您关注我们，更多了解，敬请期待！");
+		}
+		if ($this->res['Event'] == 'unsubscribe') 
+		{
+			echo "取消关注";die;
+		}
+	}
+}
+//公共号首次关注推送消息
+public function sendText($content){
+	echo "<xml>
+	<ToUserName><![CDATA[".$this->res['FromUserName']."]]></ToUserName>
+	<FromUserName><![CDATA[".$this->res['ToUserName']."]]></FromUserName>
+	<CreateTime>".time()."</CreateTime>
+	<MsgType><![CDATA[text]]></MsgType>
+	<Content><![CDATA[".$content."]]></Content>
+	</xml>";
+}
+
+
 
 
 }
