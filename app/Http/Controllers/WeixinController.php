@@ -26,11 +26,14 @@ class WeixinController extends Controller
 
 		    	if($data->Event=="subscribe"){
 		    		// file_put_contents('opopop');
-		    		$content="滚，别来";
+		    		$content="关注成功。";
 		    		echo $this->xiaoxi($data,$content);
  
 		    	}
-		    	// if($data->)
+		    	if($data->unsubscribe){
+		    		$console = "取消关注成功";
+		    		echo $this->qx($data,$console);
+		    	}
 		    }		
 		}
 
@@ -94,25 +97,36 @@ class WeixinController extends Controller
         $msgType="text";
 
         $xml = "<xml>
-					  <ToUserName><![CDATA[%s]]></ToUserName>
-					  <FromUserName><![CDATA[%s]]></FromUserName>
-					  <CreateTime>%s</CreateTime>
-					  <MsgType><![CDATA[%s]]></MsgType>
-					  <Event><![CDATA[%s]]></Event>
-					  <EventKey><![CDATA[%s]]></EventKey>
-					  <Ticket><![CDATA[%s]]></Ticket>
-					</xml>";
-                    // <xml>
-                    //   <ToUserName><![CDATA[%s]]></ToUserName>
-                    //   <FromUserName><![CDATA[%s]]></FromUserName>
-                    //   <CreateTime>%s</CreateTime>
-                    //   <MsgType><![CDATA[%s]]></MsgType>
-                    //   <Content><![CDATA[%s]]></Content>
-                    // </xml>
+                      <ToUserName><![CDATA[%s]]></ToUserName>
+                      <FromUserName><![CDATA[%s]]></FromUserName>
+                      <CreateTime>%s</CreateTime>
+                      <MsgType><![CDATA[%s]]></MsgType>
+                      <Content><![CDATA[%s]]></Content>
+                    </xml>";
+
             //替换掉上面的参数用 sprintf
         echo sprintf($xml,$toUserName,$fromUserName,$time,$msgType,$content);
 
 
+    }
+    function qx($data,$console){
+    	    //接收方账号
+        $toUserName=$data->FromUserName;
+           //开发者微信号
+        $fromUserName=$data->ToUserName;
+           //时间戳
+        $time=time();
+           //返回类型
+        $msgType="text";
+
+    	$xml = "<xml>
+				  <ToUserName><![CDATA[%s]]></ToUserName>
+				  <FromUserName><![CDATA[%s]]></FromUserName>
+				  <CreateTime>%s</CreateTime>
+				  <MsgType><![CDATA[%s]]></MsgType>
+				  <Event><![CDATA[%s]]></Event>
+				</xml>";
+		echo sprintf($xml,$toUserName,$fromUserName,$time,$msgType,$content);
     }
 
 
