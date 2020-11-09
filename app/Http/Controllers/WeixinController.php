@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redis;
-use app\Model\OpenModel;
+use App\Model\OpenModel;
 class WeixinController extends Controller
 {
 	
