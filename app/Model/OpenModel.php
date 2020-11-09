@@ -10,5 +10,6 @@ class OpenModel extends Model
     protected $primaryKey = 'open_id';
     public $timestamps = false;
     //黑名单
+    //
     protected $guarded = []; 
 }

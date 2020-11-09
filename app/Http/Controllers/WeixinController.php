@@ -52,7 +52,7 @@ class WeixinController extends Controller
                     'headimgurl' =>$uri_json['headimgurl'],
                     'subscribe_time' =>$uri_json['subscribe_time'],
                 ];
-                dd($userInfo);
+                dd($userInfo);die;
                 OpenModel::insert($userInfo);
                 // 发送信息
                 $result = $this->text($toUser,$fromUser,$content);
