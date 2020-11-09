@@ -7,8 +7,6 @@ use Illuminate\Support\Facades\Redis;
 use App\Model\OpenModel;
 class WeixinController extends Controller
 {
-	
-
     // 微信接口测试
     public function wx(Request $request)
     {
@@ -54,7 +52,7 @@ class WeixinController extends Controller
                     'subscribe_time' =>$uri_json['subscribe_time'],
                 ];
                 // dd($userInfo);die;
-                OpenModel::insert($userInfo);
+                // OpenModel::insert($userInfo);
                 // 发送信息
                 $result = $this->text($toUser,$fromUser,$content);
                 return $result;
@@ -144,6 +142,7 @@ class WeixinController extends Controller
     // 获取 access_token
     public function access_token()
     {
+        // dd(OpenModel::get());
         // {"access_token":"38_t8wL-9vVIOgIEPuD0NKA6xUgJXHAQiL-DwcY-hSVwr1hSO7WviLBfo2y415VlM7NXbWletxGTZLlHjQaOM7e1Ti1BbbD77SNef7LN8dK1fOyLOBP-BefcTKxxKAbXWRfKZCjdxDO3EoslM6TBXZdABAGCE","expires_in":7200}
         $key = 'access_token';
         if(empty(Redis::get($key))){
