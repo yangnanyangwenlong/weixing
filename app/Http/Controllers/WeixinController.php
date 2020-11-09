@@ -42,7 +42,6 @@ class WeixinController extends Controller
                 file_put_contents('laravel-access.log',$uri);
                 $uri_json = file_get_contents($uri);
                 $uri_json = json_decode($uri_json,true);
-                dd($uri_json);
                 // file_put_contents('laravel-access.log1',$uri_json.'\r\n',FILE_APPEND);
                 // die;
                 $userInfo = [
@@ -53,7 +52,7 @@ class WeixinController extends Controller
                     'subscribe_time' =>$uri_json['subscribe_time'],
                 ];
                 // dd($userInfo);die;
-                // OpenModel::insert($userInfo);
+                OpenModel::insert($userInfo);
                 // 发送信息
                 $result = $this->text($toUser,$fromUser,$content);
                 return $result;
