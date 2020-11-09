@@ -28,13 +28,10 @@ Route::prefix('weixin')->group(function(){
 	// 测试
 	Route::get('/test','WeixinController@test');
 
-
+    Route::get('/turing','WeixinController@turing');
+    // 测试
+    Route::get('/test','WeixinController@test');
 	// 新增临时素材
-	Route::get('/insert','WeixinController@media_insert');
+	Route::get('/media/insert','WeixinController@media_insert');
 });
 
-Route::prefix('wx')->group(function(){
-	// Route::get('wx','WxController@wx');
-	Route::get('/text1','WxController@text1');
-	Route::post('/text2','WxController@text2');
-});
