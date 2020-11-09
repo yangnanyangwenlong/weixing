@@ -29,6 +29,7 @@ Route::prefix('weixin')->group(function(){
 });
 
 Route::prefix('wx')->group(function(){
+	// Route::get('wx','WxController@wx');
 	Route::get('/text1','WxController@text1');
-	Route::get('/text2','WxController@text2');
+	Route::post('/text2','WxController@text2');
 });
