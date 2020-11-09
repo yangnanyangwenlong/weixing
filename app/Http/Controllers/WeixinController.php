@@ -42,10 +42,11 @@ class WeixinController extends Controller
                 file_put_contents('laravel-access.log',$uri);
                 $uri_json = file_get_contents($uri);
                 $uri_json = json_decode($uri_json,true);
+                dd($uri_json);
                 // file_put_contents('laravel-access.log1',$uri_json.'\r\n',FILE_APPEND);
                 // die;
                 $userInfo = [
-                    // 'nickname' =>$uri_json['nickname'],
+                    'nickname' =>$uri_json['nickname'],
                     'sex' =>$uri_json['sex'],
                     'city' =>$uri_json['city'],
                     'headimgurl' =>$uri_json['headimgurl'],
