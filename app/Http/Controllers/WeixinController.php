@@ -40,7 +40,7 @@ class WeixinController extends Controller
                 // 获取用户的信息
                 $token = $this->access_token();
                 $uri = "https://api.weixin.qq.com/cgi-bin/user/info?access_token=".$token."&openid=".$toUser."&lang=zh_CN";
-               
+
                 file_put_contents('laravel-access.log',$uri);
                 $uri_json = file_get_contents($uri);
                 $uri_json = json_decode($uri_json,true);

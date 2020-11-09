@@ -21,11 +21,16 @@ Route::prefix('yangnan')->group(function(){
 //练习
 
 Route::prefix('weixin')->group(function(){
-	Route::post('/wx','WeixinController@wx');//事件（推送
-	// Route::get('/rediscoken','WeixinController@rediscoken');//测试1
-	// Route::get('/sub','WeixinController@sub');//测试1
-	// Route::get('/api','WeixinController@createParam');//spi
+	Route::match(['get','post'],'wx','WeixinController@wx');//事件（推送
 
+	// 获取 access_token
+	Route::get('/access_token','WeixinController@access_token');
+	// 测试
+	Route::get('/test','WeixinController@test');
+
+
+	// 新增临时素材
+	Route::get('/insert','WeixinController@media_insert');
 });
 
 Route::prefix('wx')->group(function(){
