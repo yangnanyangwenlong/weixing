@@ -45,14 +45,14 @@ class WeixinController extends Controller
                 // file_put_contents('laravel-access.log1',$uri_json.'\r\n',FILE_APPEND);
                 // die;
                 $userInfo = [
-                    'nickname' =>$uri_json['nickname'],
+                    // 'nickname' =>$uri_json['nickname'],
                     'sex' =>$uri_json['sex'],
                     'city' =>$uri_json['city'],
                     'headimgurl' =>$uri_json['headimgurl'],
                     'subscribe_time' =>$uri_json['subscribe_time'],
                 ];
                 // dd($userInfo);die;
-                OpenModel::insert($userInfo);
+                // OpenModel::insert($userInfo);
                 // 发送信息
                 $result = $this->text($toUser,$fromUser,$content);
                 return $result;
