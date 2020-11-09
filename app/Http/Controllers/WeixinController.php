@@ -67,7 +67,7 @@ class WeixinController extends Controller
         // 被动回复用户文本
         if(strtolower($postObj->MsgType)=='text')
         {
-//            file_put_contents('laravel-access.log',$postObj);
+            //file_put_contents('laravel-access.log',$postObj);
             $toUser   = $postObj->FromUserName;
             $fromUser = $postObj->ToUserName;
             switch ($postObj->Content) {
