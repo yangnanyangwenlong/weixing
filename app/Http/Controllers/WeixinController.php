@@ -10,7 +10,7 @@ class WeixinController extends Controller
     // 微信接口测试
     public function wx(Request $request)
     {
-        $echostr = $request->echostr;//
+        $echostr = $request->echostr;
         $signature = $_GET["signature"];
         $timestamp = $_GET["timestamp"];
         $nonce = $_GET["nonce"];
@@ -26,7 +26,6 @@ class WeixinController extends Controller
         // 处理消息类型，并设置回复类型和内容
         $postObj = simplexml_load_string($postArr);
 
-
         //判断该数据包是否是订阅的事件推送
         if(strtolower($postObj->MsgType) == 'event') {
             // 关注
@@ -35,10 +34,11 @@ class WeixinController extends Controller
                 $toUser   = $postObj->FromUserName;
                 $fromUser = $postObj->ToUserName;
                 $msgType  = 'text';
-                $content  = '欢迎关注微信公众账号';
+                $content  = '来了，好巧我也在。';
                 // 获取用户的信息
                 $token = $this->access_token();
                 $uri = "https://api.weixin.qq.com/cgi-bin/user/info?access_token=".$token."&openid=".$toUser."&lang=zh_CN";
+
                 file_put_contents('laravel-access.log',$uri);
                 $uri_json = file_get_contents($uri);
                 $uri_json = json_decode($uri_json,true);
@@ -51,6 +51,7 @@ class WeixinController extends Controller
                     'headimgurl' =>$uri_json['headimgurl'],
                     'subscribe_time' =>$uri_json['subscribe_time'],
                 ];
+                // dd($userInfo);die;
                 OpenModel::insert($userInfo);
                 // 发送信息
                 $result = $this->text($toUser,$fromUser,$content);
@@ -61,10 +62,11 @@ class WeixinController extends Controller
                 // 消除用户的信息
             }
         }
+        
         // 被动回复用户文本
         if(strtolower($postObj->MsgType)=='text')
         {
-//            file_put_contents('laravel-access.log',$postObj);
+            //file_put_contents('laravel-access.log',$postObj);
             $toUser   = $postObj->FromUserName;
             $fromUser = $postObj->ToUserName;
             switch ($postObj->Content) {
@@ -116,8 +118,7 @@ class WeixinController extends Controller
                     $uri = "https://devapi.qweather.com/v7/weather/now?location=101010100&key=".$key."&gzip=n";
                     $api = file_get_contents($uri);
                     $api = json_decode($api,true);
-                    $content = "天气状态：".$api['now']['text'].'
-风向：'.$api['now']['windDir'];
+                    $content = "天气状态：".$api['now']['text'].'风向：'.$api['now']['windDir'];
                     $result = $this->text($toUser,$fromUser,$content);
                     return $result;
                     break;
@@ -126,6 +127,7 @@ class WeixinController extends Controller
                     $result = $this->text($toUser,$fromUser,$content);
                     return $result;
                     break;
+                    
             }
 
         }
@@ -140,6 +142,7 @@ class WeixinController extends Controller
     // 获取 access_token
     public function access_token()
     {
+        // dd(OpenModel::get());
         // {"access_token":"38_t8wL-9vVIOgIEPuD0NKA6xUgJXHAQiL-DwcY-hSVwr1hSO7WviLBfo2y415VlM7NXbWletxGTZLlHjQaOM7e1Ti1BbbD77SNef7LN8dK1fOyLOBP-BefcTKxxKAbXWRfKZCjdxDO3EoslM6TBXZdABAGCE","expires_in":7200}
         $key = 'access_token';
         if(empty(Redis::get($key))){
@@ -311,23 +314,5 @@ class WeixinController extends Controller
         echo $this->access_token();
     }
 }
-// 自定义菜单
-/*{
-    "button": [
-        {
-            "type": "click",
-            "name": "测试1",
-            "key": "V1001_TODAY_MUSIC"
-        },
-        {
-            "name": "测试2",
-            "sub_button": [
-                {
-                    "type": "view",
-                    "name": "百度",
-                    "url": "https://www.baidu.com/"
-                }
-            ]
-        }
-    ]
-}*/
+
+
