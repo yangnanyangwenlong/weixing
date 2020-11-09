@@ -27,3 +27,8 @@ Route::prefix('weixin')->group(function(){
 	// Route::get('/api','WeixinController@createParam');//spi
 
 });
+
+Route::prefix('wx')->group(function(){
+	Route::get('/text1','WxController@text1');
+	Route::get('/text2','WxController@text2');
+});

@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redis;
-
+use app\Model\OpenModel;
 class WeixinController extends Controller
 {
 	
@@ -36,7 +36,7 @@ class WeixinController extends Controller
                 $toUser   = $postObj->FromUserName;
                 $fromUser = $postObj->ToUserName;
                 $msgType  = 'text';
-                $content  = '欢迎关注微信公众账号';
+                $content  = '来了，好巧我也在。';
                 // 获取用户的信息
                 $token = $this->access_token();
                 $uri = "https://api.weixin.qq.com/cgi-bin/user/info?access_token=".$token."&openid=".$toUser."&lang=zh_CN";
@@ -52,7 +52,8 @@ class WeixinController extends Controller
                     'headimgurl' =>$uri_json['headimgurl'],
                     'subscribe_time' =>$uri_json['subscribe_time'],
                 ];
-                // UserWechatModel::insert($userInfo);
+                dd($userInfo);
+                OpenModel::insert($userInfo);
                 // 发送信息
                 $result = $this->text($toUser,$fromUser,$content);
                 return $result;
@@ -118,8 +119,7 @@ class WeixinController extends Controller
                     $uri = "https://devapi.qweather.com/v7/weather/now?location=101010100&key=".$key."&gzip=n";
                     $api = file_get_contents($uri);
                     $api = json_decode($api,true);
-                    $content = "天气状态：".$api['now']['text'].'
-风向：'.$api['now']['windDir'];
+                    $content = "天气状态：".$api['now']['text'].'风向：'.$api['now']['windDir'];
                     $result = $this->text($toUser,$fromUser,$content);
                     return $result;
                     break;
@@ -128,6 +128,7 @@ class WeixinController extends Controller
                     $result = $this->text($toUser,$fromUser,$content);
                     return $result;
                     break;
+                    
             }
 
         }
