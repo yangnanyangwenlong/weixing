@@ -1,7 +1,7 @@
 <?php
 namespace App\Http\Controllers;
 
-use GuzzleHttp\Client;
+use APP\Client;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redis;
@@ -51,7 +51,7 @@ class WeixinController extends Controller
                     if (strtolower($data->Event == 'subscribe')) {
                         //回复用户消息(纯文本格式)
                         $msgType = 'text';
-                        $content = '欢迎关注了我';
+                        $content = '欢迎关注yang影视公众号';
                         //根据OPENID获取用户信息（并且入库）
                         //1.获取openid
                         $token=$this->access_token();
@@ -112,7 +112,7 @@ class WeixinController extends Controller
                             break;
                         default:
                             $category = 1;
-                            $content  = "啊，亲，我疯了，你在说什么";
+                            $content  = "我听不见。。。。。(￢︿̫̿￢☆)哼·~~~";
                             break;
                     }
                     $toUser   = $data->FromUserName;
