@@ -19,26 +19,29 @@ Route::prefix('yangnan')->group(function(){
 	Route::get('/table','YangnanController@table');
 });
 //练习
-//微信开发者服务器接入(即支持get又支持post)
-Route::match(['get','post'],'/wx','WxController@checkSignature');
-//上传素材
-Route::get('/guzzle2','WxController@guzzle2');
-//获取access_token
-Route::get('/access_token','WxController@access_token');
-//天气(780)
-Route::get('/weather1','WxController@weather1');
-//自定义菜单
-Route::get('/create_menu','WxController@create_menu');
+
+Route::prefix('weixin')->group(function(){
+	//微信开发者服务器接入(即支持get又支持post)
+	Route::match(['get','post'],'/wx','WxController@checkSignature');
+	//上传素材
+	Route::get('/guzzle2','WxController@guzzle2');
+	//获取access_token
+	Route::get('/access_token','WxController@access_token');
+	//天气(780)
+	Route::get('/weather1','WxController@weather1');
+	//自定义菜单
+	Route::get('/create_menu','WxController@create_menu');
 
 
-//测试1
-Route::get('/weather','WxController@weather');
-//测试2
-Route::get('/test','WxController@test');
-//测试3(postman)
-Route::get('test2','WxController@test2');//get
-Route::post('test3','WxController@test3');//post(form-data)
-Route::post('test4','WxController@test4');//post(raw)
+	//测试1
+	Route::get('/weather','WxController@weather');
+	//测试2
+	Route::get('/test','WxController@test');
+	//测试3(postman)
+	Route::get('test2','WxController@test2');//get
+	Route::post('test3','WxController@test3');//post(form-data)
+	Route::post('test4','WxController@test4');//post(raw)
+}};
 //测试路由分组 test(prefix)
 //
 // Route::prefix('/test')->group(function (){

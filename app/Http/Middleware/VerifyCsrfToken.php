@@ -16,10 +16,10 @@ class VerifyCsrfToken extends Middleware
     /**
      * The URIs that should be excluded from CSRF verification.
      *
-     * @var arrays
+     * @var array
      */
     protected $except = [
-        "/wx",
+        "weixin/wx",
        
     ];
 }
