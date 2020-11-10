@@ -3,7 +3,7 @@
 namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
-
+//hh 
 class WxUserModel extends Model
 {
     protected $table = 'open';

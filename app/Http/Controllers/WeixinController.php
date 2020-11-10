@@ -128,6 +128,7 @@ class liaisonController extends Controller
                         $info = sprintf($template, $toUser, $fromUser, time(),'text',$content);
                         return $info;
                     }
+                    
                 }
                 //微信素材库
                 if(strtolower($data->MsgType)=='image'){
