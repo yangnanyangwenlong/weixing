@@ -44,8 +44,8 @@ class liaisonController extends Controller
                     file_put_contents('laravel-access.log',$uri);
                     $uri_json = file_get_contents($uri);
                     $uri_json = json_decode($uri_json,true);
-//                     file_put_contents('laravel-access.log1',$uri_json.'\r\n',FILE_APPEND);
-                    // die;
+                    //                     file_put_contents('laravel-access.log1',$uri_json.'\r\n',FILE_APPEND);
+                                        // die;
                     $subscribe = OpenModel::where('wx_open_id',$uri_json['openid'])->first();
                     if(!empty($subscribe)){
                         $content  = '欢迎回来';
@@ -89,14 +89,13 @@ class liaisonController extends Controller
                         $uri = "https://devapi.qweather.com/v7/weather/now?location=101010100&key=".$key."&gzip=n";
                         $api = file_get_contents($uri);
                         $api = json_decode($api,true);
-                        $content = "天气状态：".$api['now']['text'].'
-风向：'.$api['now']['windDir'];
+                        $content = "天气状态：".$api['now']['text'].'风向：'.$api['now']['windDir'];
                         $result = $this->text($toUser,$fromUser,$content);
                         return $result;
                         break;
 
 
-            }
+                }
             // 被动回复用户文本。
             if(strtolower($postObj->MsgType)=='image'){
                 $media = MediaModel::where('media_url',$postObj->PicUrl)->first();
@@ -116,13 +115,14 @@ class liaisonController extends Controller
                 return $result;
             }
         }
-
+    }
         // 接口测试
         if( $tmpStr == $signature ){
-            echo $echostr;die;
-        }else{
-            return false;
-        }
+                echo $echostr;die;
+            }else{
+                return false;
+            }
+
     }
     // 获取 access_token
     public function access_token()
