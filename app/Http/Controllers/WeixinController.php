@@ -11,7 +11,7 @@ use Log;
 
 class WeixinController extends Controller
 {
-    //测试
+    //测试ss
     public function test(){
         $toUser="abc";
         $token=$this->access_token();

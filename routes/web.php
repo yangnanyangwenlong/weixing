@@ -27,6 +27,7 @@ Route::prefix('weixin')->group(function(){
 	//天气(780)
 	Route::get('/weather1','WeixinController@weather1');
 	//自定义菜单
+	//
 	Route::get('/create_menu','WeixinController@create_menu');
 
 
