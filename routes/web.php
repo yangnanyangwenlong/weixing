@@ -14,17 +14,14 @@
 Route::get('/', function () {
     return view('welcome');
 });
-Route::prefix('yangnan')->group(function(){
-	Route::get('/','YangnanController@index');
-	Route::get('/table','YangnanController@table');
-});
+
 //练习
 
 Route::prefix('weixin')->group(function(){
 	//Route::get('/Token','test\TestController@token');//测试接入
-	Route::post('/wx','WxController@wxEvent');//测试接入、
-	Route::get('/token',"WxController@getAccressToken");//获取access_token
-	Route::get('/create_menu','WxController@create_menu');//添加菜单
+	Route::post('/wx','WieixinController@wxEvent');//测试接入、
+	Route::get('/token',"WieixinController@getAccressToken");//获取access_token
+	Route::get('/create_menu','WieixinController@create_menu');//添加菜单
 
  
 });
