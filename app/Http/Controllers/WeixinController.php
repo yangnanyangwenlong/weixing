@@ -156,14 +156,15 @@ class WeixinController extends Controller
     private function text($toUser,$fromUser,$content)
     {
         $template = "<xml>
-                            <ToUserName><![CDATA[%s]]></ToUserName>
-                            <FromUserName><![CDATA[%s]]></FromUserName>
-                            <CreateTime>%s</CreateTime>
-                            <MsgType><![CDATA[%s]]></MsgType>
-                            <Content><![CDATA[%s]]></Content>
+                            <ToUserName><![CDATA["
+                            .$template."]]></ToUserName>
+                            <FromUserName><![CDATA[".$toUser."]]></FromUserName>
+                            <CreateTime>time()</CreateTime>
+                            <MsgType><![CDATA['text']]></MsgType>
+                            <Content><![CDATA[".$content."]]></Content>
                             </xml>";
-        $info = sprintf($template, $toUser, $fromUser, time(), 'text', $content);
-        return $info;
+        // $info = sprintf($template, $toUser, $fromUser, time(), 'text', $content);
+        return $template;
     }
     //获取access_token并缓存
     public function access_token(){
