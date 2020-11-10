@@ -137,7 +137,7 @@ class liaisonController extends Controller
                 }
 
             }
-            // 被动回复用户文本
+            // 被动回复用户文本。
             if(strtolower($postObj->MsgType)=='image'){
                 $media = MediaModel::where('media_url',$postObj->PicUrl)->first();
                 if(empty($media)){

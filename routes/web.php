@@ -22,15 +22,13 @@ Route::prefix('yangnan')->group(function(){
 
 Route::prefix('weixin')->group(function(){
 	Route::match(['get','post'],'wx','WeixinController@wx');//事件（推送
+     // 测试
+    Route::get('/test','WeixinController@test');
 
 	// 获取 access_token
 	Route::get('/access_token','WeixinController@access_token');
-	// 测试
-	Route::get('/test','WeixinController@test');
 
     Route::get('/turing','WeixinController@turing');
-    // 测试
-    Route::get('/test','WeixinController@test');
 	// 新增临时素材
 	Route::get('/media/insert','WeixinController@media_insert');
 });
