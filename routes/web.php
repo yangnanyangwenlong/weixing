@@ -19,9 +19,9 @@ Route::get('/', function () {
 
 Route::prefix('weixin')->group(function(){
 	//Route::get('/Token','test\TestController@token');//测试接入
-	Route::post('/wx','WieixinController@wxEvent');//测试接入、
-	Route::get('/token',"WieixinController@getAccressToken");//获取access_token
-	Route::get('/create_menu','WieixinController@create_menu');//添加菜单
+	Route::post('/wx','WeixinController@wxEvent');//测试接入、
+	Route::get('/token',"WeixinController@getAccressToken");//获取access_token
+	Route::get('/create_menu','WeixinController@create_menu');//添加菜单
 
  
 });
