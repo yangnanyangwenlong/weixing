@@ -17,7 +17,11 @@ class WxController extends Controller
 
 
 
-
+	//消息回复
+	
+	public function wx(){
+		
+	}
 
 
 
@@ -42,39 +46,4 @@ class WxController extends Controller
 	}
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	//get
-    public function text1(){
-    	echo "no";
-    	echo '<pre>';print_r($_GET);echo '</pre>';
-    }
-    //post
-    public function text2(){
-    	echo '<pre>';print_r($_POST);echo '</pre>';
-    }
 }

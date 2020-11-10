@@ -15,21 +15,24 @@ Route::get('/', function () {
     return view('welcome');
 });
 Route::prefix('yangnan')->group(function(){
-	Route::get('/','YangnanController@index');
-	Route::get('/table','YangnanController@table');
+	
+	Route::get('access_token','YangnanController@access_token');//推送消息回复
+	
+	Route::match(['get','post'],'/','YangnanController@wx');//推送消息回复
+
 });
 //练习
 
-Route::prefix('weixin')->group(function(){
-	Route::match(['get','post'],'wx','WeixinController@wx');//事件（推送
-     // 测试
-    Route::get('/test','WeixinController@test');
+// Route::prefix('weixin')->group(function(){
+// 	Route::match(['get','post'],'wx','WeixinController@wx');//事件（推送
+//      // 测试
+//     Route::get('/test','WeixinController@test');
 
-	// 获取 access_token
-	Route::get('/access_token','WeixinController@access_token');
+// 	// 获取 access_token
+// 	Route::get('/access_token','WeixinController@access_token');
 
-    Route::get('/turing','WeixinController@turing');
-	// 新增临时素材
-	Route::get('/media/insert','WeixinController@media_insert');
-});
+//     Route::get('/turing','WeixinController@turing');
+// 	// 新增临时素材
+// 	Route::get('/media/insert','WeixinController@media_insert');
+// });
 
