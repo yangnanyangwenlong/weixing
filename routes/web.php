@@ -18,7 +18,7 @@ Route::prefix('yangnan')->group(function(){
 	
 	Route::get('access_token','YangnanController@access_token');//推送消息回复
 	
-	Route::match(['get','post'],'/','YangnanController@wx');//推送消息回复
+	Route::match(['get','post'],'/wx','YangnanController@wx');//推送消息回复
 
 });
 //练习
