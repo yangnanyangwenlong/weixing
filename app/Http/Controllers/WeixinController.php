@@ -84,39 +84,6 @@ class liaisonController extends Controller
                         $result = $this->text($toUser,$fromUser,$content);
                         return $result;
                         break;
-                    case '美女':
-                        $content  = "Eexi1YJmQ9NYVn95CoIB1nHHNnjDs1mjBcs2xK7kPkrAS29rTL8d224U1lqzl1TQ"; // 目前 id 是死的
-                        $result = $this->picture($toUser,$fromUser,$content);
-                        return $result;
-                        break;
-                    case '语音':
-                        $content  = "CIYQ3MwBK3gXJVGVzRgsMgdy1rBjbJ11Krv41r37uQIbKfDmfI6WchQ-ByA0ITVO";
-                        $result = $this->voice($toUser,$fromUser,$content);
-                        return $result;
-                        break;
-                    case '视频':
-                        $title = '视频测试';
-                        $description = '暂无视频描述';
-                        $content  = "ANjOfBAbJi8U5VMB5Fep2e4CuT4cXD88JlEnEAAMCh1uQZyBLuDy8R67jYUwhLkp";
-                        $result = $this->video($toUser,$fromUser,$content,$title,$description);
-                        return $result;
-                        break;
-                    case '音乐':
-                        $title = '音乐测试';
-                        $description = '暂无音乐描述';
-                        $musicurl = 'https://wx.wyxxx.xyz/%E5%B0%8F.mp3';
-                        $content  = "Eexi1YJmQ9NYVn95CoIB1nHHNnjDs1mjBcs2xK7kPkrAS29rTL8d224U1lqzl1TQ";
-                        $result = $this->music($toUser,$fromUser,$title,$description,$musicurl,$content);
-                        return $result;
-                        break;
-                    case '图文':
-                        $title = '图文测试';
-                        $description = '暂无图文描述';
-                        $content  = "Eexi1YJmQ9NYVn95CoIB1nHHNnjDs1mjBcs2xK7kPkrAS29rTL8d224U1lqzl1TQ";
-                        $url = 'https://www.baidu.com';
-                        $result = $this->image_text($toUser,$fromUser,$title,$description,$content,$url);
-                        return $result;
-                        break;
                     case '天气':
                         $key = '2a7f0f742a944fddb748bedb7919802e';
                         $uri = "https://devapi.qweather.com/v7/weather/now?location=101010100&key=".$key."&gzip=n";
@@ -127,14 +94,7 @@ class liaisonController extends Controller
                         $result = $this->text($toUser,$fromUser,$content);
                         return $result;
                         break;
-                    default:
-                        $app_url = env('APP_URL');
-                        $callback = file_get_contents($app_url.'/wx/turing?info='.$postObj->Content);
-                        $content = $callback;
-                        $result = $this->text($toUser,$fromUser,$content);
-                        return $result;
-                        break;
-                }
+
 
             }
             // 被动回复用户文本。
@@ -239,122 +199,8 @@ class liaisonController extends Controller
         return $info;
     }
 
-    // 2 回复图片消息
-    private function picture($toUser,$fromUser,$content)
-    {
-        $template = "<xml>
-                          <ToUserName><![CDATA[%s]]></ToUserName>
-                          <FromUserName><![CDATA[%s]]></FromUserName>
-                          <CreateTime>%s</CreateTime>
-                          <MsgType><![CDATA[%s]]></MsgType>
-                          <Image>
-                            <MediaId><![CDATA[%s]]></MediaId>
-                          </Image>
-                        </xml>";
-        $info = sprintf($template, $toUser, $fromUser, time(), 'image', $content);
-        return $info;
-    }
 
-    // 3 回复语音消息
-    private function voice($toUser,$fromUser,$content)
-    {
-        $template = "<xml>
-                          <ToUserName><![CDATA[%s]]></ToUserName>
-                          <FromUserName><![CDATA[%s]]></FromUserName>
-                          <CreateTime>%s</CreateTime>
-                          <MsgType><![CDATA[%s]]></MsgType>
-                          <Voice>
-                            <MediaId><![CDATA[%s]]></MediaId>
-                          </Voice>
-                        </xml>";
-        $info = sprintf($template, $toUser, $fromUser, time(), 'voice', $content);
-        return $info;
-    }
 
-    // 4 回复视频消息
-    private function video($toUser,$fromUser,$content,$title,$description)
-    {
-        $template = "<xml>
-                              <ToUserName><![CDATA[%s]]></ToUserName>
-                              <FromUserName><![CDATA[%s]]></FromUserName>
-                              <CreateTime><![CDATA[%s]]></CreateTime>
-                              <MsgType><![CDATA[%s]]></MsgType>
-                              <Video>
-                                <MediaId><![CDATA[%s]]></MediaId>
-                                <Title><![CDATA[%s]]></Title>
-                                <Description><![CDATA[%s]]></Description>
-                              </Video>
-                            </xml>";
-        $info = sprintf($template, $toUser, $fromUser, time(), 'video', $content,$title,$description);
-        return $info;
-    }
-
-    // 5 回复音乐消息
-    private function music($toUser,$fromUser,$title,$description,$musicurl,$content)
-    {
-        $template = "<xml>
-                  <ToUserName><![CDATA[%s]]></ToUserName>
-                  <FromUserName><![CDATA[%s]]></FromUserName>
-                  <CreateTime><![CDATA[%s]]></CreateTime>
-                  <MsgType><![CDATA[%s]]></MsgType>
-                  <Music>
-                    <Title><![CDATA[%s]]></Title>
-                    <Description><![CDATA[%s]]></Description>
-                    <MusicUrl><![CDATA[%s]]></MusicUrl>
-                    <HQMusicUrl><![CDATA[%s]]></HQMusicUrl>
-                    <ThumbMediaId><![CDATA[%s]]></ThumbMediaId>
-                  </Music>
-                </xml>";
-        $info = sprintf($template, $toUser, $fromUser, time(), 'music', $title,$description,$musicurl,$musicurl,$content);
-        return $info;
-    }
-
-    // 6 回复图文消息
-    private function image_text($toUser,$fromUser,$title,$description,$content,$url){
-        $template = "<xml>
-                              <ToUserName><![CDATA[%s]]></ToUserName>
-                              <FromUserName><![CDATA[%s]]></FromUserName>
-                              <CreateTime>%s</CreateTime>
-                              <MsgType><![CDATA[%s]]></MsgType>
-                              <ArticleCount><![CDATA[%s]]></ArticleCount>
-                              <Articles>
-                                <item>
-                                  <Title><![CDATA[%s]]></Title>
-                                  <Description><![CDATA[%s]]></Description>
-                                  <PicUrl><![CDATA[%s]]></PicUrl>
-                                  <Url><![CDATA[%s]]></Url>
-                                </item>
-                              </Articles>
-                            </xml>";
-        $info = sprintf($template, $toUser, $fromUser, time(), 'news', 1 ,$title,$description,$content,$url);
-        return $info;
-    }
-
-    /** 使用 Guzzle 来请求 Http */
-    public function turing(Request $request)
-    {
-        // 使用 Guzzle 来发送 Http 请求
-        $turing_key = env('TURING_KEY');
-        $params = [
-            'key' => $turing_key,
-            'userid' => '00011'
-        ];
-
-        $params['info'] = $request->input('info', '你好吗');
-
-        $client = new Client();
-        $options = json_encode($params, JSON_UNESCAPED_UNICODE);
-        $data = [
-            'body' => $options,
-            'headers' => ['content-type' => 'application/json']
-        ];
-
-        // 发送 post 请求
-        $response = $client->post('http://www.tuling123.com/openapi/api', $data);
-
-        $callback = json_decode($response->getBody()->getContents());
-        return $callback->text;
-    }
 
     // 测试
     public function test()
