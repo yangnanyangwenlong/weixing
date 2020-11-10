@@ -9,7 +9,7 @@ use App\Model\WxUserModel;
 use App\Model\MediaModel;
 use Log;
 
-class liaisonController extends Controller
+class WieixinController extends Controller
 {
     /**
      * 接入  消息推送
