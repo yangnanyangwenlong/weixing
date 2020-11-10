@@ -19,20 +19,29 @@ Route::prefix('yangnan')->group(function(){
 	Route::get('/table','YangnanController@table');
 });
 //练习
+//微信开发者服务器接入(即支持get又支持post)
+Route::match(['get','post'],'/wx','WxController@checkSignature');
+//上传素材
+Route::get('/guzzle2','WxController@guzzle2');
+//获取access_token
+Route::get('/access_token','WxController@access_token');
+//天气(780)
+Route::get('/weather1','WxController@weather1');
+//自定义菜单
+Route::get('/create_menu','WxController@create_menu');
 
-Route::prefix('weixin')->group(function(){
-	Route::post('/wx','weixinController@checkSignature');  //接口微信
-	Route::get('/wx/token','weixinController@token');  //access_token
-	//Route::get('/tell','weixinController@tell');  //postman测试
-	//Route::post('/tell2','weixinController@tell2');  //postman测试
-	Route::get('/custom','weixinController@custom');  //自定义菜单
 
-	//TEST 路由分组
-	//Route::prefix('/text')get()->group(function (){
-	//
-	//});
-	Route::get('getweather','weixinController@getweather');
-	Route::get('/guzzle',"weixinController@guzzle");  //guzzle 测试  GET
-	Route::get('/guzzle2',"weixinController@guzzle2");  //guzzle 测试  POST
-});
-
+//测试1
+Route::get('/weather','WxController@weather');
+//测试2
+Route::get('/test','WxController@test');
+//测试3(postman)
+Route::get('test2','WxController@test2');//get
+Route::post('test3','WxController@test3');//post(form-data)
+Route::post('test4','WxController@test4');//post(raw)
+//测试路由分组 test(prefix)
+// Route::prefix('/test')->group(function (){
+//     Route::get('/guzzle1','TestController@guzzle1');//使用guzzl发送get请求
+//     Route::get('/guzzle2','TestController@guzzle2');//上传素材
+//     Route::get('/weather','TestController@weather');//天气780
+// });

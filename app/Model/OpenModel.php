@@ -4,7 +4,7 @@ namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
 
-class OpenModel extends Model
+class WxUserModel extends Model
 {
     protected $table = 'open';
     protected $primaryKey = 'open_id';
