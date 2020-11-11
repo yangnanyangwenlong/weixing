@@ -19,8 +19,7 @@ class VerifyCsrfToken extends Middleware
      * @var array
      */
     protected $except = [
-        "weixin/wx",
-        "weixin/create_menu",
-       
+        "weixin/wx*",
+
     ];
 }
