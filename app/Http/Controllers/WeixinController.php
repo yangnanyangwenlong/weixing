@@ -1,7 +1,7 @@
 <?php
 namespace App\Http\Controllers;
 
-use vendor\guzzlehttp\guzzle\src\Client;
+use GuzzleHttp\Client;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redis;
