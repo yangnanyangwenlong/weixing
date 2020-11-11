@@ -168,26 +168,22 @@ class WeixinController extends Controller
     }
     //获取access_token并缓存
     public function access_token(){
-        $key="access_token:";
-        //判断是否有缓存
+        $key='wx:access_token';
+        //检查Redis中是否有access_token
         $token=Redis::get($key);
         if($token){
-            //有缓存
-//            echo "有缓存";
-//            echo $token;
+            // echo '有缓存'.'<br>';
         }else{
-//            echo "无缓存";
-            $url= "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=".env('WX_APPID')."&secret=".env('WX_APPSEC')."";
-//            $response=file_get_contents($url);
-            //使用guzzl发送get请求
-            $client= new Client();//实例化客户端
-            $response=$client->request('GET',$url,['verify'=>false]);//发起请求并接收响应    ssl
-            $json_str=$response->getBody();//服务器的响应数据
-            $data=json_decode($json_str,true);
+            // echo '无缓存'.'<br>';
+            $url="https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=".env('WX_APPID')."&secret=".env('WX_APPSECRET');
+            $response=file_get_contents($url);
+            // dd($response);
+            $data=json_decode($response,true);
+            // dd($token);
             $token=$data['access_token'];
-            //存到redis中
+            // echo $token;
+            //保存到Redis中，时间为3600s
             Redis::set($key,$token);
-            //设置过期时间
             Redis::expire($key,3600);
         }
         return $token;
