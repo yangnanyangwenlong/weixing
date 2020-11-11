@@ -1,7 +1,7 @@
 <?php
 namespace App\Http\Controllers;
 
-use App\GuzzleHttp\Client;
+use GuzzleHttp\Client;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redis;
@@ -22,7 +22,7 @@ class WeixinController extends Controller
     //微信接入
     public function checkSignature(Request $request)
     {
-        // return 'ptp';die;
+        
         $echostr = $request->echostr;
         $signature = $_GET["signature"];
         $timestamp = $_GET["timestamp"];
