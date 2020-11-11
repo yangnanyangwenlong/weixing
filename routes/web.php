@@ -18,10 +18,10 @@ Route::get('/', function () {
 //练习
 
 Route::prefix('weixin')->group(function(){
-    Route::get('/','WeachatController@wechat'); //接口测试
-    Route::post('/wx','WeachatController@event'); //接受事件推送
-    Route::get('/getaccesstoken','WeachatController@getaccesstoken'); //获取access_token
-    Route::post('/createmenu','WeachatController@createmenu'); //接受事件推送
+    Route::get('/','WeixinController@wechat'); //接口测试
+    Route::post('/wx','WeixinController@event'); //接受事件推送
+    Route::get('/getaccesstoken','WeixinController@getaccesstoken'); //获取access_token
+    Route::post('/createmenu','WeixinController@createmenu'); //接受事件推送
 
 });
 	
