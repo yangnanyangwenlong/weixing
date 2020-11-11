@@ -28,7 +28,7 @@ Route::prefix('weixin')->group(function(){
 	Route::get('/weather1','WeixinController@weather1');
 	//自定义菜单
 	//
-	Route::get('/create_menu','WeixinController@create_menu');
+	Route::get('wx/create_menu','WeixinController@create_menu');
 
 
 	//测试1

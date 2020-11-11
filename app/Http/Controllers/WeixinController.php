@@ -1,13 +1,13 @@
 <?php
 namespace App\Http\Controllers;
 
-use GuzzleHttp\Client;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redis;
 use App\Model\WxUserModel;
 use App\Model\MediaModel;
 use Log;
+use GuzzleHttp\Client;
 
 class WeixinController extends Controller
 {
@@ -22,7 +22,7 @@ class WeixinController extends Controller
     //微信接入
     public function checkSignature(Request $request)
     {
-        
+
         $echostr = $request->echostr;
         $signature = $_GET["signature"];
         $timestamp = $_GET["timestamp"];
@@ -190,6 +190,7 @@ class WeixinController extends Controller
             //设置过期时间
             Redis::expire($key,3600);
         }
+
         return $token;
     }
     //天气
@@ -296,3 +297,5 @@ class WeixinController extends Controller
         echo $data->ToUserName;
     }
 }
+
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      
