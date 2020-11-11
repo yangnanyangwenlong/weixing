@@ -180,7 +180,7 @@ class WeixinController extends Controller
             $url= "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=".env('WX_APPID')."&secret=".env('WX_APPSEC')."";
 //            $response=file_get_contents($url);
             //使用guzzl发送get请求
-            $client=new Client();//实例化客户端
+            $client= new Client();//实例化客户端
             $response=$client->request('GET',$url,['verify'=>false]);//发起请求并接收响应    ssl
             $json_str=$response->getBody();//服务器的响应数据
             $data=json_decode($json_str,true);
