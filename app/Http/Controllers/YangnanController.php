@@ -7,36 +7,33 @@ use DB;
 use Illuminate\Support\Facades\Redis;
 class YangnanController extends Controller
 {
-    public function wx(){
-        $signature = $_GET["signature"];
-        $timestamp = $_GET["timestamp"];
-        $nonce = $_GET["nonce"];
-        
-        $token = env('WX_TOKEN');
-        $tmpArr = array($token, $timestamp, $nonce);
-        sort($tmpArr, SORT_STRING);
-        $tmpStr = implode( $tmpArr );
-        $tmpStr = sha1( $tmpStr );
-        //获取xml数据
-        $obj = file_get_contents('php://input');
-        //将文件转为对象
-        $libxml = simplexml_load_string($obj);
-        if(!empty($libxml)){
-
-        }
-        
+    public function test1(){
+        $res=User::get()->toArray();
+        dd($res);
     }
-    public function xiao(){
-        $xml = "
-        <xml>
-          <ToUserName><![CDATA[toUser]]></ToUserName>
-          <FromUserName><![CDATA[fromUser]]></FromUserName>
-          <CreateTime>12345678</CreateTime>
-          <MsgType><![CDATA[text]]></MsgType>
-          <Content><![CDATA[你好]]></Content>
-        </xml>"
-
+    public function test2(){
+        echo phpinfo();
     }
+    public function test3(){
+        echo '<pre>';
+        print_r($_GET); 
+        echo '<pre>';
+    }
+    public function test4(){
+        echo '<pre>';
+        print_r($_POST); 
+        echo '<pre>';
+    }
+    // /**使用guzzle发起get请求 */
+    // public function guzzleget(){
+    //     $url = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=".env('WX_APPID')."&secret=".env('WX_APPSEC');
 
+    //     //使用guzzle发起get请求
+    //     $client = new Client();         //实例化 客户端
+    //     $response = $client->request('GET',$url,['verify'=>false]);       //发起请求并接收响应
 
+    //     $json_str = $response->getBody();       //服务器的响应数据
+    //     echo $json_str;
+
+    // }
 }

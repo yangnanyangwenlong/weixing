@@ -22,7 +22,7 @@ class WeixinController extends Controller
     //微信接入
     public function checkSignature(Request $request)
     {
-        
+
         $echostr = $request->echostr;
         $signature = $_GET["signature"];
         $timestamp = $_GET["timestamp"];

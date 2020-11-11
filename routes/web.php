@@ -41,3 +41,8 @@ Route::prefix('weixin')->group(function(){
 	Route::post('test4','WeixinController@test4');//post(raw)
 });
 	
+Route::get('/test1','YangnanController@test1'); //测试1
+Route::get('/test2','YangnanController@test2'); //测试2
+Route::get('/test3','YangnanController@test3'); //测试3
+Route::post('/test4','YangnanController@test4'); //测试4
+Route::get('/guzzleget','YangnanController@guzzleget'); //使用guzzle发起get请求
