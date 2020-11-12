@@ -47,6 +47,7 @@ class WeixinController extends Controller
             if(!empty($data)){
                 $toUser = $data->FromUserName;//openid
                 $fromUser = $data->ToUserName;
+                //是否推送
                 if (strtolower($data->MsgType) == "event") {
                     //关注
                     if (strtolower($data->Event == 'subscribe')) {
@@ -141,7 +142,7 @@ class WeixinController extends Controller
                             'openid'=>$data->FromUserName,
                         ];
                         MediaModel::insert($data);
-                        $content="图片已存到素材库";
+                        $colontent="图片已存到素材库";
                     }else{
                         $content="素材库已经有了";
                     }
@@ -230,7 +231,9 @@ class WeixinController extends Controller
     public function create_menu(){
         //获取access_token
         $access_token=$this->access_token();
-        $url="https://api.weixin.qq.com/cgi-bin/menu/create?access_token=".$access_token;
+        $url="https://api.weixin.qq.com/cgi-bin/menu/create?access_token=".$access_token."";
+        //删除接口
+        $delete = "https://api.weixin.qq.com/cgi-bin/menu/delete?access_token=".$access_token."";
         $array=[
             'button'=>[
                 [
@@ -251,12 +254,34 @@ class WeixinController extends Controller
             ]
         ];
         $client=new Client();
-        $response=$client->request('POST',$url,[
+        $response=$client->request('POST',$delete,[
             'verify'=>false,
             'body'=>json_encode($array,JSON_UNESCAPED_UNICODE),
         ]);
         $data=$response->getBody();
-        echo $data;
+        return $data;
+    }
+    //视频
+    public function shengpin(){
+        //获取openid 
+        $access_token=$this->access_token();
+        //处理格式
+        $type="video";
+        //获取缓存
+        $url = "https https://api.weixin.qq.com/cgi-bin/media/upload?access_token=".$access_token."&type=".$type."";
+        $client = new Client();//实例化客户端
+        //返回的数据
+        $response = $client->request('POST',$url,[
+            'verify'=>false,
+            'multipart'=>[
+                [
+                    'name'=>'media',
+                    'contents'=>fopen('文件','r')
+                ]   //上传的文件路径
+            ] 
+        ]);
+
+
     }
 
 
