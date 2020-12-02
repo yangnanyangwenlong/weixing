@@ -20,28 +20,7 @@ Route::get('/', function () {
 Route::prefix('weixin')->group(function(){
 	Route::match(['get','post'],'wx','WeixinController@wx');
 
-    /*	//微信开发者服务器接入(即支持get又支持post)
-	Route::match(['get','post'],'/wx','WeixinController@checkSignature');
-	//上传素材{图片}
-	Route::get('/guzzle2','WeixinController@guzzle2');
-	//上传素材{视频}
-	Route::get('/create_menu','WeixinController@create_menu');
-	//获取access_token
-	Route::get('/access_token','WeixinController@access_token');
-	//天气(780)
-	Route::get('/weather1','WeixinController@weather1');
-	//自定义菜单
-	Route::get('/create_menu','WeixinController@create_menu');
 
-
-	//测试1
-	Route::get('/weather','WeixinController@weather');
-	//测试2
-	Route::get('/test','WeixinController@test');
-	//测试3(postman)
-	Route::get('test2','WeixinController@test2');//get
-	Route::post('test3','WeixinController@test3');//post(form-data)
-	Route::post('test4','WeixinController@test4');//post(raw) */
 
 });
 	
